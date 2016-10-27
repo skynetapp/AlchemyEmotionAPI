@@ -25,7 +25,7 @@ Views | AlchemyEmotion | header.tpl, footer.tpl(Common files), masterList.tpl,de
 	
 ```
 	
-$GLOBALS['alchemy_apiKey']='75c6700778eda02ffce454aed26b51f1faad5f54';
+$GLOBALS['alchemy_apiKey']='xxxxxxxxxxxxxxxxxxxxxxxxx';
 $GLOBALS['alchemy_url']='https://gateway-a.watsonplatform.net/calls';
 	
 ```
