@@ -19,7 +19,7 @@ Views | AlchemyEmotion | header.tpl, footer.tpl(Common files), masterList.tpl,de
    
  
 #### Step 1:
-  Add the created Url and Alchemy Key in the config.php under bluemix2.0 folder.
+  Add the created Url and Alchemy Key in the config.php under bluemix2.0 folder. we can get the Alchemy API Key by logging into IBM Bluemix. 
 	
 **_Code:_**
 	
