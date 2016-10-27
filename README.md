@@ -1,5 +1,5 @@
 #### Date: 25-10-2016
-#### Description: This document aims to define the Alchemy Emotion API coding 
+#### Description: This document aims to define the Alchemy Emotion API coding.
 
 
 #### The Folder Structure is as follows:
@@ -41,15 +41,13 @@ $GLOBALS['alchemy_url']='https://gateway-a.watsonplatform.net/calls';
 if($_REQUEST['module']=='alchemyEmotion'){
     switch ($_REQUEST['action']){
         case 'GetList':
-        {
-			//echo "1";exit; 
+        { 
             $alchemyController = AlchemyEmotionController::getInstance();
             $alchemyController->getDataFromAlchemyDB();
             break;
         }
 		 case 'GetMasterList':
         {
-			//echo "1";exit; 
             $alchemyController = AlchemyEmotionController::getInstance();
             $alchemyController->getMasterListData();
             break;
@@ -75,6 +73,7 @@ if($_REQUEST['module']=='alchemyEmotion'){
    
 #### Step 5:
    This **getEmotionTextData()** function gets the multiple records data from Request table and sends request to Alchemy API response function **emotion('text', $text, null)** one by one using for loop.
+   The Alchemy API will be in Lib folder.
    
 #### Step 6:
    On receiving response from API, the JSON response will be stored in Mongo DB by calling function  **insertBlueMixJSONResponseIntoMongo(json_encode($data))**.
@@ -163,7 +162,7 @@ if($_REQUEST['module']=='alchemyEmotion'){
 #### Step 11:
    To view the Master list function **showEmotionMasterListView()** will be called from controller to View.
    
-**_Code:_**
+**_View Code:_**
 
 ```
   function showEmotionMasterListView($data_arr){
