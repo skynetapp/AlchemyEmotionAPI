@@ -179,7 +179,7 @@ if($_REQUEST['module']=='alchemyEmotion'){
    To view the Child data based on the master id, function **getEmotionChildDataFromMySQL($post_data)** will be called from controller.
    Function **getAllChildDataFromMySQL($post_data)** will get the records based on the master id using MySql query. Function **showChildDetailListView($alchemy_list_vo)** will be called in view. 
    
-**_Code:_**
+**_Controller page Code:_**
 
 ```
 public function getEmotionChildDataFromMySQL($post_data){
@@ -188,4 +188,15 @@ public function getEmotionChildDataFromMySQL($post_data){
 		$alchemy_view = AlchemyEmotionView::getInstance();
     	$alchemy_view->showChildDetailListView($alchemy_list_vo);
 	}
+```
+**_View page Code:_**
+
+```
+function showChildDetailListView($data_arr){
+        $smarty = new Smarty();
+        $smarty->assign('base_path',$GLOBALS['base_path']);
+		$smarty->assign('cursor',$data_arr);
+	    $smarty->display(''.$GLOBALS['root_path'].'/Views/AlchemyEmotion/detailList.tpl');
+    }
+
 ```
