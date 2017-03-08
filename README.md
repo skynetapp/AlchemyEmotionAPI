@@ -33,37 +33,6 @@ $GLOBALS['alchemy_url']='https://gateway-a.watsonplatform.net/calls';
   
 #### Step 2:
   Create a module name as 'alchemyEmotion' in index.php and respective actions will be performed accordingly.
-  
-**_Code:_**
-
-```
-<?php
-if($_REQUEST['module']=='alchemyEmotion'){
-    switch ($_REQUEST['action']){
-        case 'GetList':
-        { 
-            $alchemyController = AlchemyEmotionController::getInstance();
-            $alchemyController->getDataFromAlchemyDB();
-            break;
-        }
-		 case 'GetMasterList':
-        {
-            $alchemyController = AlchemyEmotionController::getInstance();
-            $alchemyController->getMasterListData();
-            break;
-        }
-        case 'DetailList':
-        {
-            $alchemyController = AlchemyEmotionController::getInstance();
-            $alchemyController->getEmotionChildDataFromMySQL($_REQUEST);
-            break;
-        }
-      
-    }
-}
-?>
-
-```
 
 #### Step 3:
    In the server normally we will be able to see existing Master list data. When we click on the update button **GetList** action will be performed from index page and **getDataFromAlchemyDB()** will be called.
@@ -81,76 +50,11 @@ if($_REQUEST['module']=='alchemyEmotion'){
 #### Step 7:
    The response array will be inserted into Master data by function **insertEmotionMasterDataIntoMySQL($data,$id);** from Controller.
    
-**_Code:_**
-
-```  
- public function insertAllEmotionMasterDataIntoMySQL($data,$id){
-		//print_r($data); exit;
-		$this->response_array =$data;
-		$masterId=$this->insertIntoMasterData(json_encode($data),$id);
-        if($masterId>0)
-		return $this->getParsedDataFromJSONResponse($masterId);
-	}
-	
-	
-	public function insertIntoMasterData($json_response,$id){
-    	$sql = "INSERT INTO master_emotion_request
-               (
-                alm_sugar_id,
-                alm_emotion_response_text,
-                alm_request_date,alm_external_id
-                ) VALUES (
-                
-                '',
-                '$json_response',
-                NOW(),
-				'$id'
-                )";
-		mysqli_query($this->con,$sql);
-        return $this->con->insert_id;
-    }
-
-```
 
 #### Step 8:
    Here based on the master request id, the response will be stored in Child table by function **getParsedDataFromJSONResponse($masterReqId)**.
 
-**_Code:_**
 
-```
-  public function getParsedDataFromJSONResponse($masterId){
-            $row['master_emotion_id']=$masterId;
-			$row['anger']=$this->response_array['docEmotions']['anger'];
-            $row['disgust']=$this->response_array['docEmotions']['disgust']; 
-		    $row['fear']=$this->response_array['docEmotions']['fear'];
-			$row['joy']=$this->response_array['docEmotions']['joy'];
-			$row['sadness']=$this->response_array['docEmotions']['sadness'];
-			 $this->insertIntoRowMysqlTable($row);
-    }
-
-    public function insertIntoRowMysqlTable($rowData=array()){
-    	$sql = "INSERT INTO child_emotion_request(
-                    master_emotion_id,
-					anger,
-                    disgust,
-                    fear,
-					joy,
-					sadness,
-                    alc_date
-                ) VALUES (
-                    '".$rowData['master_emotion_id']."',
-					'".$rowData['anger']."',
-                    '".$rowData['disgust']."',
-                    '".$rowData['fear']."',
-					'".$rowData['joy']."',
-					'".$rowData['sadness']."',
-                    NOW()
-                )";
-        mysqli_query($this->con,$sql);
-        return $this->con->insert_id;
-    }
-    
-```
 
 #### Step 9:
    On inserting the JSON response into master and child tables, the status and Request date will be updated for that record in the Request table by function **updateEmotionTextData($id)** in controller.
@@ -179,24 +83,18 @@ if($_REQUEST['module']=='alchemyEmotion'){
    To view the Child data based on the master id, function **getEmotionChildDataFromMySQL($post_data)** will be called from controller.
    Function **getAllChildDataFromMySQL($post_data)** will get the records based on the master id using MySql query. Function **showChildDetailListView($alchemy_list_vo)** will be called in view. 
    
-**_Controller page Code:_**
+#### MySQL Database Details
 
-```
-public function getEmotionChildDataFromMySQL($post_data){
-        $alchemy_action = AlchemyEmotionAction::getInstance();
-        $alchemy_list_vo = $alchemy_action->getAllChildDataFromMySQL($post_data);
-		$alchemy_view = AlchemyEmotionView::getInstance();
-    	$alchemy_view->showChildDetailListView($alchemy_list_vo);
-	}
-```
-**_View page Code:_**
-
-```
-function showChildDetailListView($data_arr){
-        $smarty = new Smarty();
-        $smarty->assign('base_path',$GLOBALS['base_path']);
-		$smarty->assign('cursor',$data_arr);
-	    $smarty->display(''.$GLOBALS['root_path'].'/Views/AlchemyEmotion/detailList.tpl');
-    }
-
-```
+  
+ Database Name: bluemix
+ 
+ Tables | Description | Fields 
+------------ | ------------- | ------------
+BlueMixAlmEntityExtractReq | Request table to get records where EmotionExtractionStatus='' and EmotionExtraction=0 | |
+master_emotion_request | Stores the extracted data based on the request id | alm_id, alm_request_date, alm_external_id, alm_emotion_response_text |
+child_emotion_request | Stores the child records based on master id | child_sentiment_id, master_emotion_id, anger, disgust, fear, joy, sadness, alc_date |
+ 
+ 
+#### Mongo Database details
+ 
+Database Name: lytepole
