@@ -92,7 +92,7 @@ $GLOBALS['alchemy_url']='https://gateway-a.watsonplatform.net/calls';
 ------------ | ------------- | ------------
 BlueMixAlmEntityExtractReq | Request table to get records where EmotionExtractionStatus='' and EmotionExtraction=0 | |
 master_emotion_request | Stores the extracted data based on the request id | alm_id, alm_request_date, alm_external_id, alm_emotion_response_text |
-child_emotion_request | Stores the child records based on master id | child_sentiment_id, master_emotion_id, anger, disgust, fear, joy, sadness, alc_date |
+child_emotion_request | Stores the child records based on master id | child_emotion_id, master_emotion_id, anger, disgust, fear, joy, sadness, alc_date |
  
  
 #### Mongo Database details
