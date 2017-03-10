@@ -21,6 +21,7 @@ Views | AlchemyEmotion | header.tpl, footer.tpl(Common files), masterList.tpl,de
 4. Updating the processed records status after getting the response. 
 5. The raw response from Watson is also stored in MongoDB (lytepole) as raw JSON file.
 
+
 #### Code Flows as follows:
    * To insert or get data from DB code flows.. index.php -> Controller -> Action -> MySql.
    * To view the data code flows.. index.php -> Controller -> View.
@@ -106,3 +107,9 @@ child_emotion_request | Stores the child records based on master id | child_emot
 #### Mongo Database details
  
 Database Name: lytepole
+Description: Mongo stores the JSON response given by the Alchemy API for all the records.
+
+- To start the mongoDB, open putty.
+- To start the MongoDB service type command - **mongo**.
+- To display the database, type command **db**. It will return **test** as default database. To use our database type command **use dbname**.
+- To stop the MongoDB service type command - **exit**.
