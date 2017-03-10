@@ -106,8 +106,9 @@ child_emotion_request | Stores the child records based on master id | child_emot
  
 #### Mongo Database details
  
-Database Name: lytepole
-Description: Mongo stores the JSON response given by the Alchemy API for all the records.
+- Database Name : lytepole
+- Table or collection name : BlueMixEntityExtract 
+- Description: Mongo stores the JSON response given by the Alchemy API for all the records.
 
 - To start the mongoDB, open putty.
 - To start the MongoDB service type command - **mongo**.
