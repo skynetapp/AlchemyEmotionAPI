@@ -13,6 +13,14 @@ Lib | Smarty,Common functions,AlchemyAPI | |
 Modules | AlchemyEmotion | Alchemy Emotion Controller, Alchemy Emotion Action, Alchemy Emotion MySql, Alchemy Emotion View, Alchemy Emotion DB Mongo|
 Views | AlchemyEmotion | header.tpl, footer.tpl(Common files), masterList.tpl,detailList.tpl|
 
+#### Architecture
+
+1. Read data from MySQL Table where EmotionExtractionStatus='' and EmotionExtraction=0 (Table name - BlueMixAlmEntityExtractReq)
+2. Invoke Watson by calling Alchemy API (emotion) which calls the **api key** and gets response from API for multiple records.
+3. The response is processed and updated in Parent Table (master_emotion_request) and the corresponding children are stored in child table name (children_emotion_request). 
+4. Updating the processed records status after getting the response. 
+5. The raw response from Watson is also stored in MongoDB (lytepole) as raw JSON file.
+
 #### Code Flows as follows:
    * To insert or get data from DB code flows.. index.php -> Controller -> Action -> MySql.
    * To view the data code flows.. index.php -> Controller -> View.
